@@ -1,0 +1,69 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using System.Windows;
+
+namespace ConsoleApp8
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int book1 = 0;
+            string path = System.Environment.CurrentDirectory;
+           
+            int num = Convert.ToInt32(Console.ReadLine());
+            int[,] book = new int[num,2];
+       //     Console.WriteLine(book[0][0]);
+            for (int i = 0; i < num; i++) {
+                StreamWriter sr = new StreamWriter(path + i + ".txt");
+                string a = Console.ReadLine();
+                sr.WriteLine(a);
+                sr.Close();
+            }
+            Console.WriteLine("请输入要查询字符");
+            string b = Console.ReadLine();
+            for (int i = 0;i<num;i++) {
+             //   StreamReader sw = new StreamReader(path + i + ".txt");
+                string[] ReadText = File.ReadAllLines(path + i + ".txt", Encoding.Default);
+                string x = ReadText[0];
+                string[] y = x.Split(' ');
+                foreach (string item in y)
+                {
+                    if (item.Contains(b))
+                    {
+                        book[i,0]++;
+                    }
+                    book[i, 1]++;
+                }
+            }
+            for (int i = 0; i < num; i++) {
+                if (book[i, 0] > 0) {
+                    book1++;
+                }
+            }
+            Console.Write(book1);
+            Console.Write("  ");
+            Console.Write("{");
+            for (int i = 0; i < num; i++)
+            {
+                if (book[i, 0] > 0)
+                {
+                    Console.Write("(");
+                    Console.Write("Drbug" + i + ".txt");
+                    Console.Write(" "+book[i, 0]);
+                    Console.Write("  ");
+                    Console.Write(book[i, 1]);
+                    Console.Write("   ");
+                    Console.Write(")");
+                    Console.WriteLine();
+                    Console.ReadKey();
+                }
+            }
+            Console.Write("}");
+        }
+    }
+}
